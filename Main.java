@@ -40,6 +40,20 @@ public class Main {
 		System.out.println(String.format("inorder -- > %s",bt.inorder()));
 		bt.remove(90);
 		System.out.println(String.format("inorder -- > %s",bt.inorder()));
+		TreeMap<Integer,String> tmap = new TreeMap<Integer,String>();
+		tmap.put(1,"one");
+		tmap.put(2,"two");
+		tmap.put(3,"three");
+		System.out.println(String.format("Tree Map print --> %s", tmap.entrySet()));
+		tmap.put(1,"newone");
+		System.out.println(String.format("Tree Map new one print --> %s", tmap.entrySet()));
+		System.out.println(String.format("Tree Map get 1 --> %s", tmap.get(1)));
+		System.out.println(String.format("Tree Map get 2--> %s", tmap.get(2)));
+		System.out.println(String.format("Tree Map get 3--> %s", tmap.get(3)));
+		System.out.println(String.format("Tree map size %d", tmap.size()));
+		System.out.println(String.format("Tree map remove %s", tmap.remove(1)));
+		System.out.println(String.format("Tree map size %d", tmap.size()));
+		System.out.println(String.format("Tree map remove %s", tmap.remove(1)));
 	}
 
 	/*

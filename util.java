@@ -3,6 +3,7 @@ import java.lang.Comparable;
 import java.util.*;
 import java.lang.Math;
 import java.lang.RuntimeException;
+import java.lang.NullPointerException;
 
 class BinaryTree<T extends Comparable> {
 	Node root;
@@ -18,15 +19,15 @@ class BinaryTree<T extends Comparable> {
 	}
 
 	public String inorder() {
-		return root.inorder(false).toString();
+		return root != null ? root.inorder(false).toString() : "";
 	}
 
 	public String preorder() {
-		return root.preorder(false).toString();
+		return root != null ? root.preorder(false).toString() : "";
 	}
 
 	public String postorder() {
-		return root.postorder(false).toString();
+		return root != null ? root.postorder(false).toString() : "";
 	}
 
 	public Node root() {
@@ -34,7 +35,7 @@ class BinaryTree<T extends Comparable> {
 	}
 
 	public List<T> serialize() {
-		return root.preorder(true);
+		return root != null ? root.preorder(true) : new ArrayList<T>();
 	}
 
 	public void deSerialize(Iterator<T> itr) {
@@ -284,4 +285,94 @@ class Node<T extends Comparable> {
 		}
 		return next;
 	}
+}
+
+class Entry<K extends Comparable, V> implements Comparable {
+	final K key;
+	V value;
+
+	Entry(K key, V value) {
+		this.key = key;
+		this.value = value;
+	}
+
+	public int compareTo(Object entry) {
+		if(entry == null){
+			return 1;
+		}
+		if (!(entry instanceof Entry)) {
+			return 1;
+		}
+		Entry compareTo = (Entry<K,V>)entry;
+		return this.key.compareTo(compareTo.key);
+	}
+
+	public String toString() {
+		return String.format("[%s,%s]",key.toString(),value != null ? value.toString() : "null");
+	}
+}
+
+class TreeMap<K extends Comparable, V> {
+
+	int size = 0; // size of map
+	
+	private final BinaryTree bt = new BinaryTree<Entry<K,V>>();
+
+	public V put(K key, V value) {
+		System.out.println(String.format("TreeMap.BinaryTree %s",bt.inorder()));
+		if (key == null) {
+			throw new NullPointerException("key is null");
+		}
+		final Entry entry = new Entry<K,V>(key,value);
+		final Node<Entry<K,V>> contains = bt.get(entry);
+		if (contains != null) {
+			V oldValue = contains.value.value;
+			contains.value.value = value;
+			return oldValue;
+		}
+		size++;
+		final Node<Entry<K,V>> putKey = bt.put(entry);
+		return putKey.value.value;
+	}
+
+	public V get(K key) {
+		if (key == null) {
+			return null;
+		}
+		final Entry entry = new Entry<K,V>(key, null);
+		final Node<Entry<K,V>> contains = bt.get(entry);
+		if (contains == null) {
+			return null;
+		}
+		return contains.value.value;
+	}
+
+	public int size() {
+		return size;
+	}
+
+	public boolean containsKey(K key) {
+		if (key == null) {
+			return false;
+		}
+		final Entry entry = new Entry<K,V>(key, null);
+		final Node<Entry<K,V>> contains = bt.get(entry);
+		if (contains == null) {
+			return false;
+		}
+		return true;
+	}
+
+	public Set<Entry<K,V>> entrySet() {
+		return new HashSet<Entry<K,V>>(bt.root.inorder(false));
+	}
+
+	public boolean remove(K key) {
+		if (key == null) {
+			return false;
+		}
+		final Entry entry = new Entry<K,V>(key, null);
+		return bt.remove(entry);
+	}
+
 }
