@@ -2,7 +2,7 @@
 
 import java.util.*;
 import java.lang.Math;
-
+import dp.*;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
@@ -54,6 +54,8 @@ public class Main {
 		System.out.println(String.format("Tree map remove %s", tmap.remove(1)));
 		System.out.println(String.format("Tree map size %d", tmap.size()));
 		System.out.println(String.format("Tree map remove %s", tmap.remove(1)));
+		testDenomination();
+		testSequence();
 	}
 
 	/*
@@ -111,6 +113,39 @@ public class Main {
 			} else {
 				break;
 			}
+		}
+	}
+
+	static class Coin implements Value {
+		final int value;
+		public Coin(final int value) {
+			this.value= value;
+		}
+		public int getValue() {
+			return this.value;
+		}
+		@Override
+		public String toString() {
+			return String.valueOf(value);
+		}
+	}
+
+	public static void testDenomination() {
+		final ArrayList	<Value> coins = new ArrayList<Value>();
+		coins.add(new Coin(1));
+		coins.add(new Coin(3));
+		coins.add(new Coin(5));
+		final Denomination d = new Denomination(coins);
+		Map<Integer, Denomination.Result> results = d.MinNumberOfDenomination2(11);
+		System.out.println(results);
+	}
+
+	public static void testSequence() {
+		int[] seq = Sequence.randomSeq(100, 100);
+		System.out.println(Arrays.toString(seq));
+		int[] longest = Sequence.longestSeq(seq);
+		for(int i = longest[1] /*end index*/ - longest[0] /*length*/ +1 ; i <= longest[1] ; i++) {
+			System.out.println(seq[i]);
 		}
 	}
 }

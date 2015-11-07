@@ -1,9 +1,11 @@
+package dp;
+
 import java.util.*;
 import java.lang.*;
 
 public class Denomination {
 
-	class Result {
+	public class Result {
 		Integer sum;
 		Integer denominationCount;
 		List<Value> denomination;
