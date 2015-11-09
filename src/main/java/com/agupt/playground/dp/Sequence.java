@@ -1,4 +1,4 @@
-package dp;
+package com.agupt.playground.dp;
 
 import java.util.Random;
 import java.util.ArrayList;

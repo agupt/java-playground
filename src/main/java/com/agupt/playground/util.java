@@ -1,5 +1,6 @@
-import java.lang.Comparable;
+package com.agupt.playground;
 
+import java.lang.Comparable;
 import java.util.*;
 import java.lang.Math;
 import java.lang.RuntimeException;
