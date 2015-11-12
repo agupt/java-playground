@@ -38,4 +38,39 @@ public class Sequence {
 		}
 		return currentLongestSeq;
 	}
+
+	public static int[] longestZigZagSeq(final int[] seq) {
+		// longestSeqLength[i] is len of longest ZigZag seq ending at element seq[i]
+		final int[] longestSeqLength = new int[seq.length];
+		final int[] currentLongestSeq = new int[2]; // length and start index of current longest seq
+		if( seq.length >= 1) {
+			longestSeqLength[0] = 1;
+			currentLongestSeq[0] = 1;
+			currentLongestSeq[1] = 0;	
+		}
+		
+		if (seq.length >= 2) {
+			longestSeqLength[1] = 2;
+			currentLongestSeq[0] = 2;
+			currentLongestSeq[1] = 1;
+		}
+		for (int i = 2 ; i < seq.length ; i++) {
+			if(longestSeqLength[i] == 0) {
+				longestSeqLength[i] = 1; /// trivial seq
+			}
+			if (seq[i-2] < seq[i -1] && seq[i-1] > seq[i] && longestSeqLength[i] < longestSeqLength[i-1] + 1) {
+				// +- seq 
+				longestSeqLength[i] = longestSeqLength[i-1] + 1;
+			} else if (seq[i-2] > seq[i -1] && seq[i-1] < seq[i] && longestSeqLength[i] < longestSeqLength[i-1] + 1) {
+				// -+ seq 
+				longestSeqLength[i] = longestSeqLength[i-1] + 1;
+			}
+
+			if (currentLongestSeq[0] < longestSeqLength[i]) {
+				currentLongestSeq[0] = longestSeqLength[i];
+				currentLongestSeq[1] = i;
+			}
+		}
+		return currentLongestSeq;
+	}
 }

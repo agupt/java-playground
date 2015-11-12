@@ -148,4 +148,27 @@ public class Main {
 			System.out.println(seq[i]);
 		}
 	}
+
+	// Write an algorithm that takes two sorted integer arrays and finds the common integers
+	public static List<Integer> commonIntegers(final int[] first, final int[] sec) {
+        final ArrayList<Integer> output = new ArrayList<Integer>();
+        if(first.length == 0 || sec.length == 0) {
+            return output;
+        }
+        int i = 0;
+        int j = 0;
+        while(i < first.length && j < sec.length) {
+            System.out.println(String.format("first[%d]=%d sec[%d]=%d", i, first[i],j , sec[j]));
+            if(first[i] == sec[j]) {
+                output.add(first[i]);
+                i++;
+                j++;
+            } else if ( first[i] > sec[j]) {
+                j++;
+            } else {
+                i++;
+            }
+        }
+        return output;
+    }
 }
